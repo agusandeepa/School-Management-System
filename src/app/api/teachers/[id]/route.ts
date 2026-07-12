@@ -4,14 +4,15 @@ import { prisma } from '@/lib/prisma'
 // UPDATE a teacher
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
     const { fullName, email, phone, subject } = body
 
     const teacher = await prisma.teacher.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: { fullName, email, phone, subject },
     })
 
@@ -27,11 +28,12 @@ export async function PUT(
 // DELETE a teacher
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     await prisma.teacher.delete({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
     })
     return NextResponse.json({ message: 'Teacher deleted successfully' })
   } catch (error) {

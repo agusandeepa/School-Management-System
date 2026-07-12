@@ -4,14 +4,15 @@ import { prisma } from '@/lib/prisma'
 // UPDATE a grade record
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
     const { studentId, subject, marks, examName } = body
 
     const grade = await prisma.grade.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: {
         studentId: parseInt(studentId),
         subject,
@@ -32,11 +33,12 @@ export async function PUT(
 // DELETE a grade record
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     await prisma.grade.delete({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
     })
     return NextResponse.json({ message: 'Grade record deleted successfully' })
   } catch (error) {

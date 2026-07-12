@@ -4,14 +4,15 @@ import { prisma } from '@/lib/prisma'
 // UPDATE an attendance record
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
     const { studentId, date, status } = body
 
     const record = await prisma.attendance.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: {
         studentId: parseInt(studentId),
         date: new Date(date),
@@ -31,11 +32,12 @@ export async function PUT(
 // DELETE an attendance record
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     await prisma.attendance.delete({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
     })
     return NextResponse.json({ message: 'Attendance record deleted successfully' })
   } catch (error) {
