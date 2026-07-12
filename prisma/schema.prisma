@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Feature 1: Student Management
+model Student {
+  id          Int          @id @default(autoincrement())
+  fullName    String
+  admissionNo String       @unique
+  dateOfBirth DateTime
+  gender      String
+  address     String?
+  phone       String?
+  classId     Int?
+  class       Class?       @relation(fields: [classId], references: [id])
+  attendances Attendance[]
+  grades      Grade[]
+  createdAt   DateTime     @default(now())
+}
+
+// Feature 2: Teacher Management
+model Teacher {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  email     String   @unique
+  phone     String?
+  subject   String
+  classes   Class[]
+  createdAt DateTime @default(now())
+}
+
+// Feature 3: Class / Course Management
+model Class {
+  id         Int       @id @default(autoincrement())
+  name       String
+  grade      String
+  teacherId  Int?
+  teacher    Teacher?  @relation(fields: [teacherId], references: [id])
+  students   Student[]
+  createdAt  DateTime  @default(now())
+}
+
+// Feature 4: Attendance Management
+model Attendance {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  student   Student  @relation(fields: [studentId], references: [id])
+  date      DateTime
+  status    String
+  createdAt DateTime @default(now())
+}
+
+// Feature 5: Grades / Marks Management
+model Grade {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  student   Student  @relation(fields: [studentId], references: [id])
+  subject   String
+  marks     Float
+  examName  String
+  createdAt DateTime @default(now())
+}
