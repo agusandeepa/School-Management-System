@@ -46,4 +46,4 @@ export async function DELETE(
       { status: 500 }
     )
   }
-}
+}src/app/api/attendance/[id]/route.ts

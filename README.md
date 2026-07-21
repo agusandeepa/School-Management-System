@@ -1,79 +1,92 @@
 # School Management System
 
-A full-stack School Management System built with **Next.js**, featuring student, teacher, class, attendance, and grade management — with data persisted in a database via **Prisma ORM**.
+A full-stack School Management System built with **Next.js**, **Prisma**, and **PostgreSQL**, featuring authentication and integrated with **WSO2 API Manager** for centralized API security and management.
+
+## Overview
+
+This project demonstrates a real-world use case of WSO2 API Manager by:
+- Managing a complete school system (Students, Teachers, Classes, Attendance, Grades)
+- Securing the application with a custom login/authentication system
+- Exposing backend API endpoints through WSO2 API Manager
+- Testing endpoints live through the WSO2 Publisher Portal's Try Out feature
 
 ## Features
 
-1. **Student Management** — Add, edit, delete, and view student records
-2. **Teacher Management** — Add, edit, delete, and view teacher records
-3. **Class/Course Management** — Create classes and assign teachers to them
-4. **Attendance Management** — Record and track student attendance (Present/Absent/Late)
-5. **Grades/Marks Management** — Record exam marks per student and subject
+- **Dashboard** - Overview of students, teachers, classes, attendance, and grade statistics
+- **Student Management** - Add, edit, delete, and view student records
+- **Teacher Management** - Manage teacher profiles and subject assignments
+- **Class Management** - Organize classes and assign teachers
+- **Attendance Tracking** - Record and manage daily attendance
+- **Grade Management** - Track student grades and exam records
+- **Authentication** - Secure login system with hashed passwords (bcrypt) and session-based route protection
 
 ## Tech Stack
 
-- **Frontend:** Next.js 16 (App Router), React, TypeScript, Tailwind CSS
-- **Backend:** Next.js API Routes
-- **Database:** PostgreSQL (via [Neon](https://neon.tech)) / SQLite (local dev), managed with **Prisma ORM**
-- **Deployment:** Vercel
+- Next.js 16
+- Prisma ORM
+- PostgreSQL (hosted on Neon)
+- bcryptjs (password hashing)
+- TypeScript
+- WSO2 API Manager 4.7.0
 
-## Getting Started (Local Development)
+## Backend API Endpoints
 
-1. Clone the repository:
-```bash
-git clone https://github.com/YOUR_USERNAME/school-management-system.git
-cd school-management-system
-```
+| Method | Endpoint | Description |
+|--------|----------|--------------|
+| GET/POST | /api/students | Manage student records |
+| GET/POST | /api/teachers | Manage teacher records |
+| GET/POST | /api/classes | Manage class records |
+| GET/POST | /api/attendance | Manage attendance records |
+| GET/POST | /api/grades | Manage grade records |
+| POST | /api/auth/login | User login |
+| POST | /api/auth/logout | User logout |
 
-2. Install dependencies:
+## Running the Project
+
 ```bash
 npm install
-```
-
-3. Set up environment variables — create a `.env` file in the root:
-```
-DATABASE_URL="file:./dev.db"
-```
-
-4. Run database migrations:
-```bash
+npx prisma generate
 npx prisma migrate dev
-```
-
-5. Start the development server:
-```bash
+npx prisma db seed
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Server runs on `http://localhost:3000`
 
-## Project Structure
+**Default login credentials:**
+- Username: `admin`
+- Password: `admin123`
 
-```
-src/
-├── app/
-│   ├── api/            # Backend API routes (students, teachers, classes, attendance, grades)
-│   ├── students/        # Student management page
-│   ├── teachers/        # Teacher management page
-│   ├── classes/          # Class management page
-│   ├── attendance/       # Attendance management page
-│   ├── grades/           # Grades management page
-│   ├── layout.tsx        # Root layout with sidebar navigation
-│   └── page.tsx          # Dashboard
-├── lib/
-│   └── prisma.ts         # Prisma client instance
-prisma/
-└── schema.prisma         # Database schema (models)
-```
+## Authentication
 
-## Database Schema
+The application is protected with a custom authentication system:
+- Passwords are hashed using bcrypt before storage
+- Login sessions are managed via HTTP-only cookies
+- Middleware protects all routes, redirecting unauthenticated users to the login page
 
-- **Student** — fullName, admissionNo, dateOfBirth, gender, address, phone, class relation
-- **Teacher** — fullName, email, phone, subject
-- **Class** — name, grade, teacher relation, students relation
-- **Attendance** — student relation, date, status
-- **Grade** — student relation, subject, marks, examName
+![Login Page](screenshots/login-page.jpeg)
 
-## Author
+## WSO2 API Manager Integration
 
-Developed as an academic assignment project.
+The backend API was published through WSO2 API Manager as **SchoolManagementAPI v1.0.0**:
+- **Context**: `/school`
+- **Backend Endpoint**: `http://localhost:3000/api`
+- **Security**: OAuth2
+
+### Published API on WSO2 Publisher Portal
+
+![Publisher Overview](screenshots/publisher-overview.jpeg)
+
+### Live Test via WSO2 Try Out Feature
+
+Successfully tested via the Try Out feature, receiving a live `200 OK` response with real student data routed through the WSO2 gateway:
+
+![Try Out Response](screenshots/tryout-students.jpeg)
+
+## Tech Highlights
+
+This project showcases:
+- Full CRUD operations across 5 related database models
+- Custom authentication (not a third-party auth provider)
+- Route protection via Next.js middleware
+- Real-world API management using WSO2 API Manager
