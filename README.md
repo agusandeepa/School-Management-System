@@ -64,7 +64,7 @@ The application is protected with a custom authentication system:
 - Login sessions are managed via HTTP-only cookies
 - Middleware protects all routes, redirecting unauthenticated users to the login page
 
-![Login Page](screenshots/login-page.jpeg)
+![Login Page](screenshots/login-page.png)
 
 ## WSO2 API Manager Integration
 
