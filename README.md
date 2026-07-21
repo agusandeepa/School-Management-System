@@ -92,6 +92,13 @@ The Students API was successfully tested using the `GET /api/students` endpoint,
 The Teachers API was also successfully tested using the `GET /api/teachers` endpoint, returning real teacher data through the WSO2 gateway:
 
 ![Teachers API Try Out Response](screenshots/tryout-teachers.jpeg)
+
+#### Attendance API
+
+The Attendance API was successfully tested using the `GET /api/attendance` endpoint, returning real attendance data through the WSO2 gateway:
+
+![Attendance API Try Out Response](screenshots/tryout-attendance.jpeg)
+
 ## Tech Highlights
 
 This project showcases:
