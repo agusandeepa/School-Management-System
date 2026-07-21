@@ -75,14 +75,23 @@ The backend API was published through WSO2 API Manager as **SchoolManagementAPI 
 
 ### Published API on WSO2 Publisher Portal
 
-![Publisher Overview](screenshots/publisher-overview(2).jpeg)
+![Publisher Overview](screenshots/publisher-overview.jpeg)
 
 ### Live Test via WSO2 Try Out Feature
 
-Successfully tested via the Try Out feature, receiving a live `200 OK` response with real student data routed through the WSO2 gateway:
+Successfully tested the APIs via the WSO2 Try Out feature, receiving live `200 OK` responses with real data routed through the WSO2 API Gateway.
 
-![Try Out Response](screenshots/tryout-students.jpeg)
+#### Students API
 
+The Students API was successfully tested using the `GET /api/students` endpoint, returning real student data through the WSO2 gateway:
+
+![Students API Try Out Response](screenshots/tryout-students.jpeg)
+
+#### Teachers API
+
+The Teachers API was also successfully tested using the `GET /api/teachers` endpoint, returning real teacher data through the WSO2 gateway:
+
+![Teachers API Try Out Response](screenshots/tryout-teachers.jpeg)
 ## Tech Highlights
 
 This project showcases:
