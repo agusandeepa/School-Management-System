@@ -75,7 +75,7 @@ The backend API was published through WSO2 API Manager as **SchoolManagementAPI 
 
 ### Published API on WSO2 Publisher Portal
 
-![Publisher Overview](screenshots/publisher-overview.jpeg)
+![Publisher Overview](screenshots/publisher-overview(2).jpeg)
 
 ### Live Test via WSO2 Try Out Feature
 
